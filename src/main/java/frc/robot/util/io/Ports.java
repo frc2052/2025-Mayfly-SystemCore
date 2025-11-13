@@ -11,7 +11,7 @@ public class Ports {
     /*
      * Bus: SystemCore
      */
-    public static final CANBus MAINLOOP = LOWLOOP;//CANBus.systemCore(2);
+    public static final CANBus MAINLOOP = new CANBus("can_s4"); //SystemCore Port 4; CANBus.systemcore(4) not
     public static final CANItem ARM_CANCODER_ID = new CANItem(17, MAINLOOP); // 1 etc
     public static final CANItem ARM_TALONFX_ID = new CANItem(18, MAINLOOP);
 
@@ -49,4 +49,12 @@ public class Ports {
     public static final int TRANSLATION_JOYSTICK_PORT = 0;
     public static final int ROTATION_JOYSTICK_PORT = 1;
     public static final int CONTROL_PANEL_PORT = 2;
+
+    public static CANBus systemCore2(int canbus) {
+        if (canbus < 0 || canbus > 4) {
+            throw new IllegalArgumentException("SystemCore CAN bus index must be within 0-4.");
+        }
+        return new CANBus("can_s" + canbus);
+    }
 }
+
