@@ -4,5 +4,7 @@ public enum Auto {
     NO_AUTO,
     DRIVE_FORWARD,
     LEFT_LOLI,
-    RIGHT_LOLI
+    TEST_AUTO
+    // RIGHT_LOLI
+
 }

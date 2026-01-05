@@ -1,14 +1,13 @@
 package frc.robot.auto;
 
-import java.security.AllPermission;
 import java.util.List;
-
-import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 import edu.wpi.first.math.Pair;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.RobotContainer;
@@ -21,7 +20,8 @@ public class AutoChooser {
         List.of(
             new AutoProgram(Auto.NO_AUTO, "NO AUTO", AutoFactory2::createNoAuto),
             new AutoProgram(Auto.DRIVE_FORWARD, "DRIVE FORWARD AUTO", AutoFactory2::createDriveForwardAuto),
-            new AutoProgram(Auto.LEFT_LOLI, "LEFT LOLI AUTO", AutoFactory2::createLeftLoliLeftFirstAuto)
+            new AutoProgram(Auto.LEFT_LOLI, "LEFT LOLI AUTO", AutoFactory2::createLeftLoliLeftFirstAuto),
+            new AutoProgram(Auto.TEST_AUTO, "TEST AUTO", AutoFactory2::createTestAuto)
             // new AutoProgram(Auto.RIGHT_LOLI, "RIGHT LOLI AUTO", AutoFactory2::createRightLoliRightFirstAuto)
         );
 
@@ -34,17 +34,21 @@ public class AutoChooser {
     private Pair<Pose2d, Command> blueAuto = null;
     private Pair<Pose2d, Command> redAuto = null;
 
-    private final LoggedDashboardChooser<Auto> autoChooser = new LoggedDashboardChooser<Auto>("AUTO CHOOSER 2026");
+    // private final LoggedDashboardChooser<Auto> autoChooser = new LoggedDashboardChooser<Auto>("AUTO CHOOSER 2026");
+    private final SendableChooser<Auto> autoChooser = new SendableChooser<>();
 
     public AutoChooser(RobotContainer robotContainer){
         blueFactory = new AutoFactory2(Alliance.Blue, robotContainer);
         redFactory = new AutoFactory2(Alliance.Red, robotContainer);
 
         // populate chooser --> manually for now, chooser problems
-        autoChooser.addDefaultOption("NO AUTO", Auto.NO_AUTO);
+        autoChooser.setDefaultOption("NO AUTO", Auto.NO_AUTO);
         autoChooser.addOption("DRIVE FORWARD", Auto.DRIVE_FORWARD);
         autoChooser.addOption("LEFT LOLI", Auto.LEFT_LOLI);
-        autoChooser.addOption("RIGHT LOLI", Auto.RIGHT_LOLI);
+        autoChooser.addOption("TEST AUTO", Auto.TEST_AUTO);
+        // autoChooser.addOption("RIGHT LOLI", Auto.RIGHT_LOLI);
+
+        SmartDashboard.putData("SD Auto Chooser", autoChooser);
     }
 
     public static AutoChooser create(final RobotContainer robotContainer){
@@ -59,7 +63,7 @@ public class AutoChooser {
     }
 
     public void update(){
-        Auto selected = autoChooser.get();
+        Auto selected = autoChooser.getSelected();
 
         if(selected == null){
             System.out.println("NO AUTO WAS CHOSEN --> change to default");
@@ -76,7 +80,7 @@ public class AutoChooser {
             System.out.println("NO AUTO CHANGE. CHOSEN " + selected.name());
         }
     }
-    
+
     // -------------------------------- HELPERS -------------------------------- //
 
     // return auto command for current alliance
