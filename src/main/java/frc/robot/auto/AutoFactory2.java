@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.RobotContainer;
 import frc.robot.RobotState;
 import frc.robot.commands.arm.ArmCommandFactory;
+import frc.robot.commands.drive.DefaultDriveCommand;
 import frc.robot.commands.drive.alignment.AlignmentCommandFactory;
 import frc.robot.commands.intake.IntakeCommandFactory;
 import frc.robot.subsystems.ElevatorSubsystem;
@@ -56,8 +57,8 @@ public class AutoFactory2 {
 
     Pair<Pose2d, Command> createDriveForwardAuto() {
         return Pair.of(
-                getChoreoPath(ChorPaths.DRIVE_FORWARD.getPathName()).getStartingHolonomicPose().get(),
-                Commands.sequence(followPathCommand(getChoreoPath(ChorPaths.DRIVE_FORWARD.getPathName()))));
+                new Pose2d(),
+                Commands.run(() -> new DefaultDriveCommand(() -> .7, () -> .0, () -> .0, () -> false)));
     }
 
     Pair<Pose2d, Command> createLeftLoliLeftFirstAuto() {
@@ -206,20 +207,22 @@ public class AutoFactory2 {
     Pair<Pose2d, Command> createTestAuto(){
         return Pair.of(
             getChoreoPath(ChorPaths.TEST_PICKUP.getPathName()).getStartingHolonomicPose().get(), 
-            Commands.sequence(
+            Commands.sequence( 
+                manualZero(),
                 // pickup 
-                toPosition(TargetAction.INTAKE),
-                Commands.deadline(
-                        Commands.sequence(
-                                Commands.wait(0.3), followPathCommand(getChoreoPath(ChorPaths.TEST_PICKUP.getPathName()))),
-                        Commands.parallel(IntakeCommandFactory.intake(), ArmCommandFactory.coralIn())),
+                // toPosition(TargetAction.INTAKE),
+                // Commands.deadline(
+                //         Commands.sequence(
+                //                 Commands.wait(0.3), followPathCommand(getChoreoPath(ChorPaths.TEST_PICKUP.getPathName()))),
+                        Commands.parallel(IntakeCommandFactory.intake(), ArmCommandFactory.coralIn()).withTimeout(1),
+                        // ),
                 // have coral? drive forward 2 meters
                 // no coral? keep driving backwards
                 Commands.defer(() -> {
                     if(haveCoral()){
-                        return followPathCommand(getChoreoPath(ChorPaths.TEST_2.getPathName()));
+                        return followPathCommand(getChoreoPath(ChorPaths.TEST_1.getPathName()));
                     } else {
-                        return followPathCommand(getChoreoPath(ChorPaths.TEST_3.getPathName()));
+                        return toPosition(TargetAction.L2);
                     }
                 }, 
                 Set.of())

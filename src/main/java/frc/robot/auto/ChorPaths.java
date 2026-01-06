@@ -10,14 +10,13 @@ import frc.robot.RobotState;
 /** Add your docs here. */
 public enum ChorPaths {
 
-    DRIVE_FORWARD("DRIVE FORWARD"),
     SL_A("SL A"),
     AB_LOLIPOP_C("AB LOLIPOP-C"),
     AB_LOLIPOP_L("AB LOLIPOP-L"),
     AB_LOLIPOP_R("AB LOLIPOP-R"),
     TEST_PICKUP("TEST-PICKUP"),
-    TEST_2("TEST-2"),
-    TEST_3("TEST-3");
+    TEST_1("TEST-1"),
+    TEST_2("TEST-2");
 
     public String pathName;
 
