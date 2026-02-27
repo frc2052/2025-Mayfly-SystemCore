@@ -5,15 +5,11 @@ import edu.wpi.first.networktables.DoubleTopic;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.util.sendable.Sendable;
-// import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.auto.common.AutoFactory.Auto;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 public class Dashboard {
     private final LoggedDashboardChooser<DriveMode> driveModeChooser = new LoggedDashboardChooser<>("Drive Mode");
-
-    private final LoggedDashboardChooser<Auto> autoChooser = new LoggedDashboardChooser<Auto>("Auto Mode");
 
     private final LoggedDashboardChooser<Double> waitSecondsChooser =
             new LoggedDashboardChooser<Double>("Wait Seconds");
@@ -51,11 +47,6 @@ public class Dashboard {
         waitTimeTopic.publish().accept(0.0);
         nudgeElevator.publish().accept(0.0);
 
-        autoChooser.addDefaultOption(Auto.LEFT_LOLI_LEFT_FIRST.name(), Auto.LEFT_LOLI_LEFT_FIRST);
-
-        for (Auto auto : Auto.values()) {
-            autoChooser.addOption(auto.name(), auto);
-        }
         waitSecondsChooser.addDefaultOption("None Chosen", 0.0);
         waitSecondsChooser.addOption("1 Second", 1.0);
 
@@ -93,10 +84,6 @@ public class Dashboard {
 
     public boolean isFieldCentric() {
         return driveModeChooser.get() == DriveMode.FIELD_CENTRIC;
-    }
-
-    public Auto getAuto() {
-        return autoChooser.get();
     }
 
     public boolean getLeftLollipopFirst() {

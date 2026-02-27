@@ -1,0 +1,25 @@
+When you want to make a new auto:
+
+1. Set up the paths you need in Choreo (the application)
+    - Make sure to follow the naming convention
+2. List any new paths in @ChorPaths.java
+3. List the auto as an enum identifier in @Autos.java
+4. Create the method in @AutoFactory.java
+    - returns a Pair of your initial pose (Pose2d) & what happens in your auto (Command)
+    - use existing createAuto() methods as an example!
+5. Add an @AutoProgram at the top of @AutoChooser.java, in the List
+    - param1: Auto.java enum classifier
+    - param2: String name
+    - param3: supply @AutoFactory method
+6. Yay, now you've made a full auto!
+
+// auto list for afomia
+1. left double neutral zone cycle & climb // 
+2. left 1 neutral zone cycle 1 depot cycle & climb // 
+3. right double neutral zone cycle & climb //
+4. right 1 neutral zone cycle 1 outpost cycle & climb //
+5. center - clear depot & outpost & climb //
+6. full outpost auto (broken intake) & climb //
+7. complete backup - shoot center & climb //
+8. start left, complete neutral zone sweep, score, exit RT, outpost, score & climb
+9. start right, complete neutral zone sweep, score, exit LT, depot, score & climb

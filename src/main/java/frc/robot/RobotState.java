@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.commands.drive.alignment.AlignmentCommandFactory;
-import frc.robot.subsystems.arm.ArmRollerSubsystem;
-import frc.robot.subsystems.intake.IntakeRollerSubsystem;
+// import frc.robot.subsystems.arm.ArmRollerSubsystem;
+// import frc.robot.subsystems.intake.IntakeRollerSubsystem;
 import frc.robot.util.AlignmentCalculator.AlignOffset;
 import frc.robot.util.AlignmentCalculator.FieldElementFace;
 import frc.robot.util.FieldConstants;
@@ -43,9 +43,9 @@ public class RobotState {
         return MathHelpers.POSE_2D_ZERO;
     }
 
-    public boolean getHasCoral() {
-        return ArmRollerSubsystem.getInstance().getHasCoral();
-    }
+    // public boolean getHasCoral() {
+    //     return ArmRollerSubsystem.getInstance().getHasCoral();
+    // }
 
     public void setAlignOffset(AlignOffset offset) {
         // System.out.println("NEW OFFSET " + offset.toString());
@@ -132,17 +132,7 @@ public class RobotState {
     }
 
     public void output() {
-        Logger.recordOutput("Swerve Module States", drivetrainState.ModuleStates);
-        Logger.recordOutput("Swerve Module Goals", drivetrainState.ModuleTargets);
         Logger.recordOutput("Current Pose", drivetrainState.Pose);
-        Logger.recordOutput("Goal Align Pose", getAlignPose());
-        Logger.recordOutput(
-                "Goal Left Alignment",
-                getFieldToRobot()
-                        .nearest(isRedAlliance() ? FieldConstants.redLeftBranches : FieldConstants.blueLeftBranches));
-        Logger.recordOutput(
-                "Goal Right Alignment",
-                getFieldToRobot()
-                        .nearest(isRedAlliance() ? FieldConstants.redRightBranches : FieldConstants.blueRightBranches));
+        Logger.recordOutput("Auto Start Pose", autoStartPose);
     }
 }

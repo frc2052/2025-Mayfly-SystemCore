@@ -1,0 +1,14 @@
+These are the acronyms / names to use for 
+Choreo files & naming autos
+
+Note: left & right are considered from the driverstation POV
+ so, the depot is to the LEFT & outpost to the RIGHT
+
+LB & RB = left & right bump
+LT & RT = left & right trench
+LN & RN = left & right neutral zone
+LC & RC = left & right climb
+S = score
+H = hub (ex. stopping in front of it)
+D = depot
+O = outpost
